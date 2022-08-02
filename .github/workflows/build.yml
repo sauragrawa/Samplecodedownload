@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     container: azsdkengsys.azurecr.io/azuresdk/autorest-all
     steps:
-      - run: echo Hello, world!!
+      - run: autorest --help
