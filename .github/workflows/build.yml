@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     container: azsdkengsys.azurecr.io/azuresdk/autorest-all
     steps:
-      - run: autorest --input-file=pets.json --csharp --output-folder=myFolder/
+      - run: autorest --input-file=Pets.json --csharp --output-folder=myFolder/
