@@ -23,10 +23,10 @@ jobs:
       run: npm install autorest@latest -g
 
     - name: Generate C# client library
-      run: autorest --input-file=api-spec.yaml --output-folder=client-libraries/csharp --csharp
+      run: autorest --input-file=Pets.json --output-folder=client-libraries/csharp --csharp
 
     - name: Generate TypeScript client library
-      run: autorest --input-file=api-spec.yaml --output-folder=client-libraries/typescript --typescript
+      run: autorest --input-file=Pets.json --output-folder=client-libraries/typescript --typescript
 
     - name: Commit changes
       run: |
