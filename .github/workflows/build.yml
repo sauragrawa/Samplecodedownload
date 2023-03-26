@@ -5,25 +5,28 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: azsdkengsys.azurecr.io/azuresdk/autorest-all
     steps:
-      - name: Generate file
-        run: autorest --verbose --input-file=https://github.com/sauragrawa/Samplecodedownload/blob/3aff908b910abbd949cc17f14a67571c135d72d1/Pets.json --csharp --output-folder=myFolder/
-      - name: Copy file from container to workspace
-        run: |
-          docker cp my-container:/path/to/file/in/container/myFolder/ $GITHUB_WORKSPACE
-      - name: Initialize Git repository and add file
-        run: |
-          cd $GITHUB_WORKSPACE
-          git init
-          git config user.name "GitHub Actions"
-          git config user.email "test@test.com"
-          git add file.txt
-          git commit -m "Add file.txt"
-      - name: Push changes to repository
-        uses: actions/github-script@v4
-        with:
-          script: |
-            cd $GITHUB_WORKSPACE
-            git remote add origin https://github.com/sauragrawa/Samplecodedownload.git
-            git push -u origin main
+    - uses: actions/checkout@v2
+    
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install AutoRest
+      run: npm install autorest@latest -g
+
+    - name: Generate client libraries
+      run: autorest --input-file=Pets.json --output-folder=client-libraries --csharp --typescript
+
+    - name: Commit changes
+      run: |
+        git config --global user.email "test@example.com"
+        git config --global user.name "test Name"
+        git add .
+        git commit -m "Update client libraries"
+    
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
