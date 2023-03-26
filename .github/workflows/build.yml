@@ -14,13 +14,19 @@ jobs:
         node-version: '14'
     
     - name: Delete existing client libraries
-      run: rm -rf client-libraries
+      run: |
+        rm -rf client-libraries
+        rm -rf client-libraries/csharp
+        rm -rf client-libraries/typescript
 
     - name: Install AutoRest
       run: npm install autorest@latest -g
 
-    - name: Generate client libraries
-      run: autorest --input-file=Pets.json --output-folder=client-libraries
+    - name: Generate C# client library
+      run: autorest --input-file=api-spec.yaml --output-folder=client-libraries/csharp --csharp
+
+    - name: Generate TypeScript client library
+      run: autorest --input-file=api-spec.yaml --output-folder=client-libraries/typescript --typescript
 
     - name: Commit changes
       run: |
