@@ -12,6 +12,9 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '14'
+    
+    - name: Delete existing client libraries
+      run: rm -rf client-libraries
 
     - name: Install AutoRest
       run: npm install autorest@latest -g
