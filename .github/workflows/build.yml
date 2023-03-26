@@ -11,7 +11,7 @@ jobs:
         run: autorest --input-file=https://github.com/sauragrawa/Samplecodedownload/blob/3aff908b910abbd949cc17f14a67571c135d72d1/Pets.json --csharp --output-folder=myFolder/
       - name: Copy file from container to workspace
         run: |
-          docker cp my-container:/myFolder/ $GITHUB_WORKSPACE
+          docker cp my-container:/path/to/file/in/container/myFolder/ $GITHUB_WORKSPACE
       - name: Initialize Git repository and add file
         run: |
           cd $GITHUB_WORKSPACE
