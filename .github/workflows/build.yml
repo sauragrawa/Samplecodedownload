@@ -7,4 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     container: azsdkengsys.azurecr.io/azuresdk/autorest-all
     steps:
-      - run: autorest --input-file=https://github.com/sauragrawa/Samplecodedownload/blob/3aff908b910abbd949cc17f14a67571c135d72d1/Pets.json --csharp --output-folder=https://github.com/sauragrawa/Samplecodedownload
+      - name: Generate file
+        run: autorest --input-file=https://github.com/sauragrawa/Samplecodedownload/blob/3aff908b910abbd949cc17f14a67571c135d72d1/Pets.json --csharp --output-folder=myFolder/
+      - name: Copy file from container to workspace
+        run: |
+          docker cp my-container:/myFolder/ $GITHUB_WORKSPACE
+      - name: Initialize Git repository and add file
+        run: |
+          cd $GITHUB_WORKSPACE
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "test@test.com"
+          git add file.txt
+          git commit -m "Add file.txt"
+      - name: Push changes to repository
+        uses: actions/github-script@v4
+        with:
+          script: |
+            cd $GITHUB_WORKSPACE
+            git remote add origin https://github.com/sauragrawa/Samplecodedownload.git
+            git push -u origin main
