@@ -17,7 +17,7 @@ jobs:
       run: npm install autorest@latest -g
 
     - name: Generate client libraries
-      run: autorest --input-file=Pets.json --output-folder=client-libraries --csharp --typescript
+      run: autorest --input-file=Pets.json --output-folder=client-libraries
 
     - name: Commit changes
       run: |
