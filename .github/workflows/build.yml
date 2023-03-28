@@ -28,6 +28,16 @@ jobs:
     - name: Generate TypeScript client library
       run: autorest --input-file=Pets.json --output-folder=client-libraries/typescript --typescript
 
+    - name: Create zip file for C# client library
+      run: |
+        cd client-libraries/csharp
+        zip -r csharp-client-library.zip .
+
+    - name: Create zip file for TypeScript client library
+      run: |
+        cd client-libraries/typescript
+        zip -r typescript-client-library.zip .
+
     - name: Commit changes
       run: |
         git config --global user.email "test@example.com"
